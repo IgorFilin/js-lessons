@@ -10,7 +10,7 @@ import {
 } from '../../redux/actions';
 import { connect, ConnectedProps } from 'react-redux';
 
-const CurrencyEContainer: React.FC<TProps> = props => {
+const CurrencyEContainer: React.FC<TProps> = props => { // контейнер валюты
 
     const {
         currencies,
@@ -23,10 +23,10 @@ const CurrencyEContainer: React.FC<TProps> = props => {
         changeCurrency,
     } = props;
 
-    let currencyRate: number = 0;
+    let currencyRate: number = 0; // оценённая валюта
     const currenciesName = currencies.map((currency: CurrencyType) => {
         if (currency.currencyName === currentCurrency) {
-            currencyRate = isBuying ? currency.buyRate : currency.sellRate;
+            currencyRate = isBuying ? currency.buyRate : currency.sellRate; // isBuying покупает
         }
         return currency.currencyName;
     });

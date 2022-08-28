@@ -14,9 +14,9 @@ import Lesson4 from "./lessons/lesson4/Lesson4";
 function App() {
     return (
         <div className="container">
-            {/*<Lesson1 />*/}
+            <Lesson1 />
             {/*<Lesson3 />*/}
-            <Lesson4 />
+            {/*<Lesson4 />*/}
         </div>
     );
 }
