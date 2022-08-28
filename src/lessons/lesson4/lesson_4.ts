@@ -1,3 +1,6 @@
+import {log} from "util";
+
+
 console.log('lesson 4');
 
 // http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
@@ -8,11 +11,21 @@ console.log('lesson 4');
 // Создайте промис, который постоянно находиться в состоянии pending.
 // В конструкторе промиса выведите в консоль сообщение "Promise is created".
 
+let promise = new Promise((resolve, reject) => {
+    return console.log("Promise is created")
+})
+console.log('Promis1:', promise)
 
 // Task 02
 // Создайте промис, который после создания сразу же переходит в состояние resolve
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
+
+let promise2 = new Promise((resolve, reject) => {
+    resolve('Promise Data')
+})
+promise2.then((dataPromis) => console.log(dataPromis))
+console.log('Promis2:', promise2)
 
 
 // Task 03
@@ -20,12 +33,26 @@ console.log('lesson 4');
 // и возвращает строку 'Promise Error'
 // Получите данные промиса и выведите их в консоль
 
+let promise3 = new Promise((resolve, reject) => {
+    reject('Promise Error')
+})
+promise3.catch((err) => console.log(err))
+
+console.log('Promis3:', promise3)
+
 
 // Task 04
 // Создайте промис, который переходит в состояние resolved через 3с.
 // (Используйте setTimeout)
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
+
+let promise4 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('Promise Data'), 3000)
+})
+promise4.then(data => console.log(data))
+
+console.log('Promis4:', promise4)
 
 
 // Task 05
@@ -41,6 +68,41 @@ console.log('lesson 4');
 // свойства resolve и reject получают ссылки на соответствующие функции
 // resolve и reject. Следующие два обработчика запускают методы resolve и reject.
 
+const handlePromise = {
+    promise:null,
+    resolve:null,
+    reject:null,
+    onSuccess(paramName:any){
+        return console.log(`Promise is resolved with data: ${paramName}`)
+    },
+    onError(paramName:any){
+        return console.log(`Promise is rejected with error: ${paramName}`)
+    }
+}
+const changeHandlePromise = (a:any,b:any,c:any) => {
+    handlePromise.promise = a
+    handlePromise.resolve = b
+    handlePromise.reject = c
+}
+
+const createPromis = document.getElementById('btn-create-promise')
+const resolvePromis = document.getElementById('btn-resolve-promise')
+const rejectPromis = document.getElementById('btn-reject-promise')
+
+if(createPromis){
+    createPromis.addEventListener('click',() => new Promise((resolve,reject)=> {
+       return
+    }))
+}
+if(resolvePromis){
+    resolvePromis.addEventListener('click',()=>{
+        console.log('2')})
+}
+if(rejectPromis){
+    rejectPromis.addEventListener('click',()=>{
+        console.log('3')})
+}
+
 
 // Task 06
 // Создайте промис, который через 1 с возвращает строку "My name is".
@@ -49,14 +111,53 @@ console.log('lesson 4');
 // Создайте функцию print, которая выводит в консоль значение своего параметра
 // Добавьте два метода then и передайте созданные функции.
 
+let promise5 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("My name is"), 1000)
+})
+    .then(data => onSuccess(data))
+    .then(data => print(data))
+
+function onSuccess(a: any) {
+    return a + ' Igor'
+}
+
+function print(x: any) {
+    return console.log(x)
+}
 
 // Task 7
 // Создайте три промиса. Первый промис возвращает объект { name: "Anna" } через 2с,
 // второй промис возвращает объект {age: 16} через 3 с, а третий {city: ''} через 4с.
 // Получите результаты работы промисов, объедините свойства объектов
 // и выведите в консоль {name, age, city}
+console.log('Task 7')
+
+let promise6_1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve({name:'Anna'})
+    }, 2000)
+})
+promise6_1.then(data => data)
+
+let promise6_2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve({age:16})
+    }, 3000)
+})
+promise6_2.then(data => data)
+
+let promise6_3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve({city:''})
+    }, 4000)
+})
+promise6_3.then(data => data)
+
+let promiseAll = Promise.all([promise6_1,promise6_2,promise6_3])
+promiseAll.then(obj => console.log(obj))
+
 
 
 
 // just a plug
-export default ()=>{};
+export default promise
