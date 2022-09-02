@@ -154,7 +154,14 @@ let promise6_3 = new Promise((resolve, reject) => {
 promise6_3.then(data => data)
 
 let promiseAll = Promise.all([promise6_1,promise6_2,promise6_3])
-promiseAll.then(obj => console.log(obj))
+promiseAll.then(arr => {
+    let obj = {};
+    arr.forEach((el) => {
+        Object.assign(obj,el);
+    });
+    console.log(obj)
+})
+console.log(promiseAll)
 
 
 

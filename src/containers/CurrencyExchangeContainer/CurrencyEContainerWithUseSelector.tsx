@@ -1,27 +1,35 @@
 import React from 'react';
 import CurrencyExchange from '../../components/CurrencyExchange/CurrencyExchange';
 import { CurrencyState, CurrencyType } from '../../redux/currencyReducer';
-import { Dispatch } from 'redux';
 import {
     ChangeActionAC,
     ChangeCurrencyFieldAC,
-    СhangeCurrentCurrencyAC,
-    CurrencyReducersTypes
+    СhangeCurrentCurrencyAC
 } from '../../redux/actions';
-import { connect, ConnectedProps } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {IGlobalState} from "../../redux/state";
 
-const CurrencyEContainer: React.FC<TProps> = props => { // контейнер валюты
+export const CurrencyEContainerWithUseSelector: React.FC = props => { // контейнер валюты
 
-    const {
-        currencies,
-        currentCurrency,
-        isBuying,
-        amountOfBYN,
-        amountOfCurrency,
-        setCurrencyAmount,
-        setAction,
-        changeCurrency,
-    } = props;
+    const state = useSelector<IGlobalState,CurrencyState>(state=> state.currency)
+    const dispatch = useDispatch()
+
+    let currencies = state.currencies
+    let currentCurrency = state.currentCurrency
+    let isBuying = state.isBuying
+    let amountOfBYN = state.amountOfBYN
+    let amountOfCurrency = state.amountOfCurrency
+
+   const setCurrencyAmount = (val1:string,val2:string) => {
+       dispatch(ChangeCurrencyFieldAC(val1,val2))
+   }
+   const setAction = (buyingStatus:boolean) => {
+        dispatch(ChangeActionAC(buyingStatus))
+   }
+
+   const changeCurrency  = (currentCurrency:string) => {
+        dispatch(СhangeCurrentCurrencyAC(currentCurrency))
+   }
 
     let currencyRate: number = 0; // оценённая валюта
     const currenciesName = currencies.map((currency: CurrencyType) => {
@@ -86,29 +94,4 @@ const mapStateToProps = ( { currency } : {currency: CurrencyState} ): CurrencySt
     };
 };
 
-
-// const mapDispatchToProps = (dispatch: Dispatch<CurrencyReducersTypes>) : any => {
-//     return {
-//         setCurrencyAmount(amountOfBYN: string, amountOfCurrency: string) {
-//             dispatch(ChangeCurrencyFieldAC(amountOfBYN, amountOfCurrency));
-//         },
-//         setAction(isBuying: boolean) {
-//             dispatch(ChangeActionAC(isBuying));
-//         },
-//         changeCurrency(currency: string) {
-//             dispatch(СhangeCurrentCurrencyAC(currency));
-//         },
-//     };
-// };
-
-
-const connector = connect(mapStateToProps, {setCurrencyAmount:ChangeCurrencyFieldAC,setAction:ChangeActionAC,changeCurrency:СhangeCurrentCurrencyAC});
-
-type TProps = ConnectedProps<typeof connector>;
-// type mapDispatchToProp = {
-//     setCurrencyAmount:(amountOfBYN: string, amountOfCurrency: string)=>void
-//     setAction:(isBuying: boolean)=>void
-//     changeCurrency:(currency: string)=>void
-// }
-export default connector(CurrencyEContainer);
 
