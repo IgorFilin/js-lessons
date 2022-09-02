@@ -1,4 +1,4 @@
-import {log} from "util";
+
 
 
 console.log('lesson 4');
@@ -14,6 +14,7 @@ console.log('lesson 4');
 let promise = new Promise((resolve, reject) => {
     return console.log("Promise is created")
 })
+console.log(promise)
 console.log('Promis1:', promise)
 
 // Task 02
@@ -21,26 +22,16 @@ console.log('Promis1:', promise)
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
 
-let promise2 = new Promise((resolve, reject) => {
-    resolve('Promise Data')
-})
-promise2.then((dataPromis) => console.log(dataPromis))
-console.log('Promis2:', promise2)
-
+Promise.resolve('Promise Data')
+    .then((dataPromis) => console.log(dataPromis))
 
 // Task 03
 // Создайте промис, который после создания сразу же переходит в состояние rejected
 // и возвращает строку 'Promise Error'
 // Получите данные промиса и выведите их в консоль
 
-let promise3 = new Promise((resolve, reject) => {
-    reject('Promise Error')
-})
-promise3.catch((err) => console.log(err))
-
-console.log('Promis3:', promise3)
-
-
+Promise.reject('Promise Error')
+    .catch((err) => console.log(err))
 // Task 04
 // Создайте промис, который переходит в состояние resolved через 3с.
 // (Используйте setTimeout)
@@ -51,9 +42,6 @@ let promise4 = new Promise((resolve, reject) => {
     setTimeout(() => resolve('Promise Data'), 3000)
 })
 promise4.then(data => console.log(data))
-
-console.log('Promis4:', promise4)
-
 
 // Task 05
 // Создайте литерал объекта handlePromise со следующими свойствами:
@@ -69,39 +57,47 @@ console.log('Promis4:', promise4)
 // resolve и reject. Следующие два обработчика запускают методы resolve и reject.
 
 const handlePromise = {
-    promise:null,
-    resolve:null,
-    reject:null,
-    onSuccess(paramName:any){
+    promise: null,
+    resolve: null,
+    reject: null,
+    onSuccess(paramName: string) {
         return console.log(`Promise is resolved with data: ${paramName}`)
     },
-    onError(paramName:any){
+    onError(paramName: string) {
         return console.log(`Promise is rejected with error: ${paramName}`)
     }
 }
-const changeHandlePromise = (a:any,b:any,c:any) => {
-    handlePromise.promise = a
-    handlePromise.resolve = b
-    handlePromise.reject = c
-}
+let promis = document.querySelector('#btn-create-promise')
+let promisResolve = document.querySelector('#btn-resolve-promise')
+let promisReject = document.querySelector('#btn-reject-promise')
 
-const createPromis = document.getElementById('btn-create-promise')
-const resolvePromis = document.getElementById('btn-resolve-promise')
-const rejectPromis = document.getElementById('btn-reject-promise')
 
-if(createPromis){
-    createPromis.addEventListener('click',() => new Promise((resolve,reject)=> {
-       return
-    }))
-}
-if(resolvePromis){
-    resolvePromis.addEventListener('click',()=>{
-        console.log('2')})
-}
-if(rejectPromis){
-    rejectPromis.addEventListener('click',()=>{
-        console.log('3')})
-}
+export const createPromis = () => {
+         // @ts-ignore
+        return handlePromise.promise = new Promise((resolve, reject) => {
+
+            //@ts-ignore
+            handlePromise.resolve = resolve
+            //@ts-ignore
+            handlePromise.reject = reject
+        }).then((res) => {
+            return handlePromise.onSuccess('hello')
+        }).catch((res) => {
+            return handlePromise.onError('bye')
+        })
+    }
+
+
+export const resolvePromis = () => {
+       // @ts-ignore
+        return  handlePromise.resolve()
+    }
+
+export const rejectPromis = ()=> {
+       // @ts-ignore
+        return  handlePromise.reject()
+    }
+
 
 
 // Task 06
