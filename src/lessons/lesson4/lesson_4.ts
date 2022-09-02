@@ -75,7 +75,6 @@ let promisReject = document.querySelector('#btn-reject-promise')
 export const createPromis = () => {
          // @ts-ignore
         return handlePromise.promise = new Promise((resolve, reject) => {
-
             //@ts-ignore
             handlePromise.resolve = resolve
             //@ts-ignore

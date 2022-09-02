@@ -231,7 +231,7 @@ console.log('Task 05.4')
 
 function printList(l: any) {
     let temp = l
-    while(temp){
+    while (temp) {
         console.log(temp.value)
         temp = temp.next
     }
@@ -240,12 +240,12 @@ function printList(l: any) {
 console.log(printList(list))
 
 function printList2(l: any) {
- if(!l){
-   return false
- }else {
-     console.log(l.value)
-     printList2(l.next)
- }
+    if (!l) {
+        return false
+    } else {
+        console.log(l.value)
+        printList2(l.next)
+    }
 }
 
 console.log(printList2(list))
@@ -254,6 +254,7 @@ console.log(printList2(list))
 //
 //     Сделайте два решения: с использованием цикла и через рекурсию.
 console.log('Task 05.5')
+
 function printList3(l: any) {
     let temp = l
 
@@ -262,9 +263,9 @@ function printList3(l: any) {
 console.log(printList3(list))
 
 function printList4(l: any) {
-    if(!l){
+    if (!l) {
         return false
-    }else {
+    } else {
         console.log(l.value)
         printList2(l.next)
     }
@@ -276,6 +277,34 @@ console.log(printList4(list))
 // Task 06
 // написать функцию, которая повторяет функционал метода flat массива на всю глубину.
 
+let arr = [1, 2, 3, [4, 5, 6, [7, 8, 9]]]
+
+const flatDefault = (arr: any) => {
+    return [...arr].flat(1)
+}
+console.log(flatDefault(arr))
+
+const castomFlat = (array:any):any => {
+    let result: any[] = []
+    for (let i = 0; i < array.length; i++) {
+      if(Array.isArray(array[i])){
+          // @ts-ignore
+          result =  result.concat(castomFlat(array[i]))
+      }else {
+          result.push(array[i])
+      }
+    }
+    return result
+}
+console.log(castomFlat(arr))
+
+//result =[1,2,3] //1 rec
+//result = [4,5,6] // 2 rec
+//result = [7,8,9] // 3 rec
+//result = [4,5,6,7,8,9] // 1 inRec
+//result = [1,2,3,4,5,6,7,8,9] // 2 inRec
+//result = [1,2,3,4,5,6,7,8,9] // 1 inRec
 // just a plug
 export default () => {
 };
+
