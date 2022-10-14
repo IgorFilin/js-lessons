@@ -19,20 +19,20 @@ console.log("Task 1 learn.js");
 //  2)Ответьте на вопрос: как быстрее получить значение glasses – через pockets.glasses или через head.glasses? При необходимости составьте цепочки поиска и сравните их.
 
 let head = {
-  glasses: 1,
+    glasses: 1,
 };
 
 let table = {
-  pen: 3,
+    pen: 3,
 };
 
 let bed = {
-  sheet: 1,
-  pillow: 2,
+    sheet: 1,
+    pillow: 2,
 };
 
 let pockets = {
-  money: 2000,
+    money: 2000,
 };
 //
 // Object.setPrototypeOf(pockets, bed);
@@ -40,13 +40,13 @@ let pockets = {
 // Object.setPrototypeOf(table, head);
 // // @ts-ignore
 // console.log(pockets.glasses);
-//@ts-ignore
+
 pockets.__proto__ = bed
-// @ts-ignore
+
 bed.__proto__ = table
-// @ts-ignore
+
 table.__proto__ = head
-// @ts-ignore
+
 console.log(pockets.pen)
 
 //Task 01
@@ -56,10 +56,52 @@ console.log(pockets.pen)
 // проверить, что методы работают
 console.log('Task 01')
 
+class Animal {
+    name = 'Animal'
+
+    constructor(name) {
+        this.name = name
+    }
+
+    walk() {
+        return console.log(`${this.name} is walk`)
+    }
+
+    eat() {
+        return console.log(`${this.name} is eat`)
+    }
+
+    sleep() {
+        return console.log(`${this.name} is sleep`)
+    }
+}
+
+
 //Task 02
 // Реализовать класс Monkey на базе класса Animal,  конструктор принимает name(по умолчанию 'Monkey') в качестве
 // параметра, реализовать методы roar и climb аналогично классу Animal
 // проверить, что все методы работают
+
+class Monkey extends Animal {
+    name = 'monkey'
+    constructor(name) {
+        super(name)
+    }
+
+    roar() {
+        return console.log(`${this.name} is roar`)
+    }
+
+    climb() {
+        return console.log(`${this.name} is climb`)
+    }
+}
+
+const bob = new Monkey('bob')
+
+console.log(bob.name)
+console.log(bob.sleep())
+console.log(bob.walk())
 
 //Task 03
 // Реализовать класс Human на базе класса Monkey, конструктор принимает name(по умолчанию 'Human') в качестве
@@ -70,7 +112,7 @@ console.log('Task 01')
 // Реализовать таски 01-03 через функции конструкторы в отдельном JS файле, реализовать наследование
 
 // Task 05
-// Используя метод Apply реализовать свой собственный метод bind
-
+// Используя метод Apply реализовать свой собственный
 // just a plug
-export default () => {};
+export default () => {
+};

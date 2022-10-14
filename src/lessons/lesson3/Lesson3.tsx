@@ -4,18 +4,29 @@ import './lesson_3';
 
 const Lesson3 = () => {
     const [searchName, setSearchName] = useState('');
-    const [serachResult, setSerachResult] = useState('');
+    const [searchResult, setSearchResult] = useState('');
     const [searchNameByType, setSearchNameByType] = useState('');
-    const [serachResultByType, setSerachResultByType] = useState('');
+    const [searchResultByType, setSearchResultByType] = useState('');
+    const [searchImgFilm, setSearchImgFilm] = useState('');
 
     const searchFilm = () => {
         API.searchFilmsByTitle(searchName)
+            .then(res => {
+                setSearchResult(JSON.stringify(res.data))
+                setSearchImgFilm(res.data.Poster)
+            })
+
     };
 
     const searchByType = (e: React.MouseEvent<HTMLButtonElement>) => {
         const type: string = e.currentTarget.dataset.t ? e.currentTarget.dataset.t : '';
         API.searchFilmsByType(searchNameByType, type)
+            .then(res => {
+                setSearchResultByType(JSON.stringify(res.data))
+            })
     }
+
+
 
     return (
         <div>
@@ -25,7 +36,8 @@ const Lesson3 = () => {
                 <input type="text" value={searchName} onChange={(e) => setSearchName(e.currentTarget.value)}/>
                 <button onClick={searchFilm}>Search</button>
                 <div>
-                    {serachResult}
+                    <img src={searchImgFilm} alt="logoFilm"/>
+                    {searchResult}
                 </div>
             </div>
 
@@ -35,7 +47,7 @@ const Lesson3 = () => {
                 <button onClick={searchByType} data-t='movie'>Movie</button>
                 <button onClick={searchByType} data-t='series'>Series</button>
                 <div>
-                    {serachResultByType}
+                    {searchResultByType}
                 </div>
             </div>
         </div>
