@@ -1,72 +1,99 @@
 // Task 1
 // Есть некоторая строка (const str = 'fgfggg';), что будет, если мы возьмем str[0]
-
+const str = 'fgfggg'
+console.log(str[0])
 // Task 2
 // Реализуйте необходимый код, что бы выражение (2).plus(3).minus(1) сработало и вернуло 4
 
 // Task 3
 // Реализуйте функцию, которая принимает следующие аргументы (строки) '*', '1', 'b', '1c', и возвращает строку '1*b*1c'
+const sumString = (sep, str1, str2, str3) => {
+    return str1 + sep + str2 + sep + str3
+}
 
+console.log(sumString('*', '1', 'b', '1c'))
 // Task 4
-// Напишите функцию которая найдет сумму всех вершин в структуре данны типа tree
+// Напишите функцию которая найдет сумму всех вершин в структуре данных типа tree
 // Рекурсивно
 // В цикле
 
 const tree = {
-	valueNode: 3,
-	next: [{
-		valueNode: 1,
-		next: null
-	},
-		{
-			valueNode: 3,
-			next: null
-		},
-		{
-			valueNode: 2,
-			next: null
-		},
-		{
-			valueNode: 2,
-			next: [
-				{
-					valueNode: 1,
-					next: null
-				},
-				{
-					valueNode: 5,
-					next: null
-				}
-			]
-		}]
+    valueNode: 3,
+    next: [{
+        valueNode: 1,
+        next: null
+    },
+        {
+            valueNode: 3,
+            next: null
+        },
+        {
+            valueNode: 2,
+            next: null
+        },
+        {
+            valueNode: 2,
+            next: [
+                {
+                    valueNode: 1,
+                    next: null
+                },
+                {
+                    valueNode: 5,
+                    next: null
+                }
+            ]
+        }]
 };
+//{valueNode:3,next:[{},{},{}]} ==> obj.next ==> [{},{},{}] ==>
+const sumRec = (obj) => {
+    let sum = 0
+    if (Array.isArray(obj.next)) {
+        sum += obj.valueNode
+        return obj.next.reduce((acc, temp) => {
+            if (!temp.next) {
+                return sum += temp.valueNode
+            } else {
+                return sum + sumRec(temp)
+            }
 
+        }, 0)
+    }
+    return sum
+}
+console.log(sumRec(tree))
 // Task 5
 // исправить код, что бы работал правильно
 
-for (var i = 0; i < 10; i++) {
-	setTimeout(function () {
-		console.log(i);
-	}, 100);
+for (let i = 0; i < 10; i++) {
+    setTimeout(function () {
+        console.log(i);
+    }, 100);
 }
 
 // Task 6
 // Реализуйте функцию Foo, что бы все корректно работало
 
 function Book(name, author) {
-	this.name = name;
-	this.author = author;
-	return this;
+    this.name = name;
+    this.author = author;
 }
 
-// function Foo(Book, 'Учебник javascript', 'Петр Сергеев')
-//
-// var book = Foo(Book, 'js', 'petr');
-// console.log(book.name);
+
+function Foo(Book, name, author) {
+    return new Book(name, author)
+}
+
+var book = Foo(Book, 'js', 'petr');
+console.log(book.name);
 
 // Task 7
 // Реализовать функцию f: f(2, 3) -> 5, при вызове f(2)(3), тоже вернет 5
 
+const f = (a) => {
+    return (b) => a + b
+}
+console.log(f(2)(3))
 // Task 8
 // Реализовать функцию f: f(1)(2)(3)() -> 6, f(0)(3)(1)(5)() -> 8
 
@@ -75,6 +102,22 @@ function Book(name, author) {
 
 // Task 10
 // Реализовать функцию сортировки массива пузырьком
+
+let array = [4,3,2,5,7,89,34,13,867,6,234,12,44,3,546,78,234,21,1,77]
+
+const bubbleSort = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length - 1 - i; j++) {
+            if(arr[j] > arr[j + 1]){
+               let temp = arr[j + 1]
+                arr[j + 1] = arr[j]
+                arr[j] = temp
+            }
+        }
+    }
+    return arr
+}
+console.log(bubbleSort(array))
 
 // Task 11
 // Есть строка, состоящая из разных скобок - str = "())({}}{()][][", написать функцию проверки закрыты ли все.
@@ -91,23 +134,23 @@ function Book(name, author) {
 // getTreeValues(tree); // => [1, 2, 3, 4, 5, 6, 7]
 
 const tree2 = {
-	value: 1,
-	children: [
-		{
-			value: 2,
-			children: [
-				{ value: 4 },
-				{ value: 5 },
-			]
-		},
-		{
-			value: 3,
-			children: [
-				{ value: 6 },
-				{ value: 7 },
-			]
-		}
-	]
+    value: 1,
+    children: [
+        {
+            value: 2,
+            children: [
+                {value: 4},
+                {value: 5},
+            ]
+        },
+        {
+            value: 3,
+            children: [
+                {value: 6},
+                {value: 7},
+            ]
+        }
+    ]
 };
 
 // Task 15
@@ -149,13 +192,13 @@ const tree2 = {
 // Что выведет консоль?
 
 Promise
-	.resolve()
-	.then(() => console.log(1))
-	.then(() => console.log(2))
-	.then(() => console.log(3));
+    .resolve()
+    .then(() => console.log(1))
+    .then(() => console.log(2))
+    .then(() => console.log(3));
 
 Promise
-	.resolve()
-	.then(() => console.log(4))
-	.then(() => console.log(5))
-	.then(() => console.log(6));
+    .resolve()
+    .then(() => console.log(4))
+    .then(() => console.log(5))
+    .then(() => console.log(6));
